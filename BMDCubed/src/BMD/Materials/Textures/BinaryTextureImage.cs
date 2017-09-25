@@ -194,14 +194,18 @@ namespace BMDCubed.Materials
 
         public void SetTextureSettings(Grendgine_Collada_Texture src)
         {
-            foreach (Grendgine_Collada_Extra extr in src.Extra)
+            if (src.Extra != null)
             {
-                foreach (Grendgine_Collada_Technique teq in extr.Technique)
+                foreach (Grendgine_Collada_Extra extr in src.Extra)
                 {
-                    if (teq.profile == "MAYA")
-                        SetMayaTexSettings(teq);
+                    foreach (Grendgine_Collada_Technique teq in extr.Technique)
+                    {
+                        if (teq.profile == "MAYA")
+                            SetMayaTexSettings(teq);
+                    }
                 }
             }
+            else SetDefaultTexSettings();
         }
 
         private void SetMayaTexSettings(Grendgine_Collada_Technique teq)
@@ -228,6 +232,12 @@ namespace BMDCubed.Materials
                         throw new FormatException(string.Format("Unknown texture setting {0}!", elm.Name));
                 }
             }
+        }
+
+        private void SetDefaultTexSettings()
+        {
+            WrapS = WrapModes.Repeat;
+            WrapT = WrapModes.Repeat;
         }
 
         public void SaveImageToDisk(string outputFile, byte[] imageData, int width, int height)

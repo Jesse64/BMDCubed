@@ -30,6 +30,9 @@ namespace BMDCubed.src.BMD.Skinning
             if (scene.Library_Controllers == null)
                 return null;
 
+            if (scene.Library_Controllers.Controller == null)
+                return null;
+
             Grendgine_Collada_Skin skinning = null;
 
             foreach (Grendgine_Collada_Controller con in scene.Library_Controllers.Controller)

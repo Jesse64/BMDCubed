@@ -27,7 +27,17 @@ namespace BMDCubed.src.BMD.Geometry
         {
             Batches = new List<Batch>();
 
-            foreach (Grendgine_Collada_Triangles tri in mesh.Triangles)
+            Grendgine_Collada_Geometry_Common_Fields[] tris = null;
+
+            if (mesh.Triangles != null)
+                tris = mesh.Triangles;
+            else if (mesh.Polylist != null)
+                tris = mesh.Polylist;
+
+            if (tris == null)
+                throw new System.ArgumentException("Could not load indices from mesh. (unknown list?)");
+
+            foreach (Grendgine_Collada_Geometry_Common_Fields tri in tris)
             {
                 // Tri count was zero, couldn't initialize batch
                 if (tri.Count == 0)

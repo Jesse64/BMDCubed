@@ -137,7 +137,7 @@ namespace BMDCubed.Materials
             Materials = new List<Material>();
         }
 
-        public MaterialManager(Grendgine_Collada scene, List<Batch> batches)
+        public MaterialManager(Grendgine_Collada scene, List<Batch> batches, string modelPath)
         {
             #region List initialization
             m_indirectTexBlock = new List<IndirectTexturing>();
@@ -176,11 +176,11 @@ namespace BMDCubed.Materials
 
             foreach (Batch bat in batches)
             {
-                Grendgine_Collada_Material batMat = GrendgineMaterials.First(x => x.Name == bat.MaterialName);
+                Grendgine_Collada_Material batMat = GrendgineMaterials.First(x => x.Name == bat.MaterialName || x.ID == bat.MaterialName);
                 Grendgine_Collada_Effect batEffect = Effects.First(x => x.ID == batMat.Instance_Effect.URL.Remove(0,1));
                 Grendgine_Collada_Phong phong = batEffect.Profile_COMMON[0].Technique.Phong;
 
-                Material mat = new Material(phong, bat, "", Images);
+                Material mat = new Material(phong, bat, modelPath, Images);
                 Materials.Add(mat);
             }
         }

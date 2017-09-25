@@ -77,7 +77,7 @@ namespace BMDCubed.src.BMD.Geometry
         public string MaterialName;
         public IList<VertexAttributes> Attributes { get { return m_attributeListCopy; } }
 
-        private Grendgine_Collada_Triangles m_colladaTriangleData;
+        private Grendgine_Collada_Geometry_Common_Fields m_colladaTriangleData;
         private DrawData m_drw1;
 
         // Cached for writing to disk later
@@ -87,7 +87,7 @@ namespace BMDCubed.src.BMD.Geometry
         // Blah hack
         private IList<VertexAttributes> m_attributeListCopy;
 
-        public Batch(Grendgine_Collada_Triangles colladaTris, DrawData drw1)
+        public Batch(Grendgine_Collada_Geometry_Common_Fields colladaTris, DrawData drw1)
         {
             m_colladaTriangleData = colladaTris;
             m_drw1 = drw1;

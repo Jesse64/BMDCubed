@@ -18,13 +18,13 @@ namespace BMDCubed.src
         public GeometryManager Geometry;
         public MaterialManager Materials;
 
-        public BMDManager(Grendgine_Collada scene)
+        public BMDManager(Grendgine_Collada scene, string modelPath)
         {
             Skeleton = new SkinningManager(scene);
             Geometry = new GeometryManager(scene, Skeleton.Drw1Data, Skeleton.SkelData.BindShapeMatrix);
             Geometry.VertexData.TransformPositions(Skeleton.Drw1Data, Skeleton.SkelData.FlatHierarchy);
             Skeleton.SkelData.AssignBoneBoundingBoxes(Geometry.VertexData.Positions, Skeleton.Drw1Data);
-            Materials = new MaterialManager(scene, Geometry.BatchData.Batches);
+            Materials = new MaterialManager(scene, Geometry.BatchData.Batches, modelPath);
         }
 
         public void WriteBMD(EndianBinaryWriter writer)

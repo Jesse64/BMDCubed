@@ -55,7 +55,7 @@ namespace BMDCubed
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
 
             Grendgine_Collada sourceModel = Grendgine_Collada.Grendgine_Load_File(inputFileName);
-            BMDManager manager = new BMDManager(sourceModel);
+            BMDManager manager = new BMDManager(sourceModel, inputFileName);
 
             using (FileStream stream = new FileStream(outputFileName, FileMode.Create, FileAccess.Write))
             {

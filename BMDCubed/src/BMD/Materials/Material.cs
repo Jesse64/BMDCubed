@@ -143,6 +143,10 @@ namespace BMDCubed.Materials
             if (source.Diffuse.Texture != null)
             {
                 string texName = source.Diffuse.Texture.Texture;
+
+                if (texName.EndsWith("-sampler"))
+                    texName = texName.Substring(0, texName.Length - "-sampler".Length);
+
                 string path = textures.First(x => x.ID == texName).Init_From.Replace("file://","");
 
                 if (!Path.IsPathRooted(path))
@@ -158,6 +162,9 @@ namespace BMDCubed.Materials
 
                 string imageExt = Path.GetExtension(path).ToLower();
                 Bitmap imageData = null;
+
+                if(!File.Exists(path))
+                    throw new ArgumentException(string.Format("Texture {0} does not exist!", path));
 
                 switch (imageExt)
                 {

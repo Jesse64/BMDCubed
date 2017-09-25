@@ -353,7 +353,17 @@ namespace BMDCubed.src.BMD.Geometry
 
         private void GetActiveVertAttributes(Grendgine_Collada_Mesh mesh)
         {
-            foreach (Grendgine_Collada_Triangles tri in mesh.Triangles)
+            Grendgine_Collada_Geometry_Common_Fields[] tris = null;
+
+            if (mesh.Triangles != null)
+                tris = mesh.Triangles;
+            else if (mesh.Polylist != null)
+                tris = mesh.Polylist;
+
+            if (tris == null)
+                throw new ArgumentException("Could not load indices from mesh. (unknown list?)");
+
+            foreach (Grendgine_Collada_Geometry_Common_Fields tri in tris)
             {
                 foreach (Grendgine_Collada_Input_Shared input in tri.Input)
                 {
@@ -402,7 +412,7 @@ namespace BMDCubed.src.BMD.Geometry
                     // This is a hack. It needs to be fixed because it is a hack.
                     // Should probably get the vertex positions directly from the vertex
                     // class in the mesh.
-                    Positions = GetVertexData<Vector3>(mesh.Source.First(x => x.ID.Contains("POSITION")));
+                    Positions = GetVertexData<Vector3>(mesh.Source.First(x => x.ID.Contains("POSITION") || x.ID.Contains("positions")));
                 }
                 else if (val.Key == VertexAttributes.Normal)
                 {
